@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './UsersTable.css';
+import './Pagination.css';
+import PaginationItem from './PaginationItem';
+
+const range = (start, end) => {
+    return [...Array(end).keys()].map(el => el + start);
+};
 
 const SearchBar = ({ searchTable }) => {
     const [searchValue, setSearchValue] = useState('');
@@ -69,7 +75,13 @@ function UsersTable() {
     const [users, setUsers] = useState([]);
     const [sorting, setSorting] = useState({ column: 'id', order: 'asc' });
     const [searchValue, setSearchValue] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+
     const columns = ['id', 'name', 'avatar'];
+    const total = 500;
+    const limit = 20;
+    const pagesCount = Math.ceil(total / limit);
+    const pages = range(1, pagesCount);
 
     const sortTable = (newSorting) => {
         setSorting(newSorting);
@@ -77,7 +89,7 @@ function UsersTable() {
 
     const getData = async () => {
         const api = await fetch(`
-            http://localhost:7000/users?_sort=${sorting.column}&_order=${sorting.order}&name_like=${searchValue}
+            http://localhost:7000/users?_sort=${sorting.column}&_order=${sorting.order}&name_like=${searchValue}&_page=${currentPage}&_limit=${limit}
         `);
 
         const data = await api.json();
@@ -90,7 +102,7 @@ function UsersTable() {
 
     useEffect(() => {
         getData();
-    }, [sorting, searchValue]);
+    }, [sorting, searchValue, currentPage]);
 
     return (
         <>
@@ -99,6 +111,20 @@ function UsersTable() {
                 <Header columns={columns} sorting={sorting} sortTable={sortTable} />
                 <Content entries={users} columns={columns} />
             </table>
+
+
+            <ul className="Pagination">
+                {pages.map((page) => {
+                    return (
+                        <PaginationItem
+                            key={page}
+                            page={page}
+                            currentPage={currentPage}
+                            onPageChange={(page) => setCurrentPage(page)}
+                        />
+                    );
+                })}
+            </ul>
         </>
     )
 }
