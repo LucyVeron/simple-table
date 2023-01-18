@@ -53,11 +53,11 @@ const Content = ({ entries, columns }) => {
             {entries.map((entry) => {
                 return (
                     <tr key={entry.id}>
-                        {columns.map((col) => {
-                            return (
-                                <td key={col} className="users-table-cell">{entry[col]}</td>
-                            );
-                        })}
+                        <td key={columns[0]} className="users-table-cell">{entry[columns[0]]}</td>
+                        <td key={columns[1]} className="users-table-cell">{entry[columns[1]]}</td>
+                        <td key={columns[2]} className="users-table-cell">
+                            <img src={entry[columns[2]]} />
+                        </td>
                     </tr>
                 );
             })}
@@ -69,7 +69,7 @@ function UsersTable() {
     const [users, setUsers] = useState([]);
     const [sorting, setSorting] = useState({ column: 'id', order: 'asc' });
     const [searchValue, setSearchValue] = useState('');
-    const columns = ['id', 'name', 'website'];
+    const columns = ['id', 'name', 'avatar'];
 
     const sortTable = (newSorting) => {
         setSorting(newSorting);
