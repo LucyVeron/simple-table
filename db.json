@@ -1,0 +1,29 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Leanne Graham",
+            "website": "hildegard.org"
+        },
+        {
+            "id": 2,
+            "name": "Ervin Howell",
+            "website": "anastasia.net"
+        },
+        {
+            "id": 3,
+            "name": "Clementine Bauch",
+            "website": "ramiro.info"
+        },
+        {
+            "id": 4,
+            "name": "Patricia Lebsack",
+            "website": "kale.biz"
+        },
+        {
+            "id": 5,
+            "name": "Chelsey Dietrich",
+            "website": "demarco.info"
+        }
+    ]
+}
